@@ -1,0 +1,36 @@
+# ============ 构建产物 / build outputs ============
+bin/
+obj/
+obj_stale_*/
+
+# ============ 敏感文件 / secrets — 绝不提交 ============
+# 和风天气 Ed25519 私钥（JWT 签名用，等价于账户凭证）
+qweather/*.pem
+qweather/*.key
+
+# ============ 数据再分发（源数据无开源许可，改为 tools/ 脚本自行生成）============
+# qwd/LocationList 的 China-City-List 未附带许可证，仓库不直接分发其衍生数据
+Data/china-cities.tsv
+
+# ============ 个人内容 / personal ============
+# 本机测试照片
+sample-images/
+err.txt
+
+# ============ IDE / 本地缓存 ============
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.rsuser
+*.log
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Ll]ogs/
+[Ll]og/
+TestResults/
+*.binlog

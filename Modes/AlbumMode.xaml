@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="TurzxDisplay.Modes.AlbumMode"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TurzxDisplay.Controls"
+    Width="800" Height="480">
+
+    <Grid Background="#E9EFF7">
+        <controls:SoftCard CornerRadius="18" Margin="10">
+            <Grid>
+                <Image x:Name="Photo" Stretch="UniformToFill"/>
+                <Border x:Name="CaptionPill" CornerRadius="10" Background="#662E3D59"
+                        Padding="12,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,12,12">
+                    <TextBlock x:Name="CaptionText" FontSize="14" Foreground="White"
+                               FontFamily="Segoe UI Variable Display"/>
+                </Border>
+                <StackPanel x:Name="EmptyHint" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="8">
+                    <TextBlock Text="&#xE8B9;" FontFamily="Segoe Fluent Icons" FontSize="44"
+                               Foreground="#8AA0D8" HorizontalAlignment="Center"/>
+                    <TextBlock Text="在右侧面板选择一个照片文件夹" FontSize="22" Foreground="#7687A3"
+                               FontFamily="Segoe UI Variable Display" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </controls:SoftCard>
+    </Grid>
+</UserControl>

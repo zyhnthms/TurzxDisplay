@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="TurzxDisplay.Modes.QuotaMode"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TurzxDisplay.Controls"
+    Width="800" Height="480">
+
+    <Grid Background="#F2F0FA">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- header: plan + level | 24h token usage -->
+        <controls:SoftCard Grid.Row="0" Margin="12,12,12,6" CornerRadius="18" Padding="22,10"
+                           Background="#F2F0FA" BorderBrush="#59FFFFFF">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" Spacing="2">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="GLM Coding Plan" FontSize="26" FontWeight="SemiBold" Foreground="#37345A"
+                                   FontFamily="Segoe UI Variable Display" VerticalAlignment="Center"/>
+                        <Border x:Name="LevelBadge" CornerRadius="8" Background="#7C6FD8" Padding="9,2"
+                                VerticalAlignment="Center" Visibility="Collapsed">
+                            <TextBlock x:Name="LevelText" Text="Pro" FontSize="13" FontWeight="SemiBold"
+                                       Foreground="White" FontFamily="Segoe UI Variable Display"/>
+                        </Border>
+                    </StackPanel>
+                    <TextBlock x:Name="SubText" Text="智谱 GLM 编程套餐" FontSize="15" Foreground="#7A76A0"
+                               FontFamily="Segoe UI Variable Display"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="近 24 小时 token 用量" FontSize="12" Foreground="#A5A1C4"
+                               HorizontalAlignment="Right" FontFamily="Segoe UI Variable Display"/>
+                    <TextBlock x:Name="Tokens24hText" Text="—" FontSize="24" FontWeight="SemiBold" Foreground="#37345A"
+                               HorizontalAlignment="Right" FontFamily="Segoe UI Variable Display"/>
+                </StackPanel>
+            </Grid>
+        </controls:SoftCard>
+
+        <!-- content: two quota windows + hourly usage bars -->
+        <controls:SoftCard Grid.Row="1" Margin="12,6,12,12" CornerRadius="18" Padding="18,12"
+                           Background="#F2F0FA" BorderBrush="#59FFFFFF">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- 5-hour | weekly -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Spacing="6">
+                        <Grid>
+                            <TextBlock x:Name="Win1Title" Text="5 小时额度" FontSize="18" FontWeight="SemiBold"
+                                       Foreground="#37345A" FontFamily="Segoe UI Variable Display"/>
+                            <TextBlock x:Name="Win1Pct" Text="" FontSize="15" FontWeight="SemiBold" Foreground="#7C6FD8"
+                                       HorizontalAlignment="Right" FontFamily="Segoe UI Variable Display"/>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock x:Name="Win1Remain" Text="—" FontSize="44" FontWeight="SemiBold" Foreground="#37345A"
+                                       FontFamily="Segoe UI Variable Display"/>
+                            <TextBlock Text="剩余" FontSize="14" Foreground="#7A76A0" Margin="0,26,0,0"
+                                       FontFamily="Segoe UI Variable Display"/>
+                        </StackPanel>
+                        <Border Height="12" CornerRadius="6" Background="#E2DEF3">
+                            <Border x:Name="Win1Bar" Height="12" CornerRadius="6" Background="#7C6FD8"
+                                    HorizontalAlignment="Left" Width="0"/>
+                        </Border>
+                        <TextBlock x:Name="Win1Detail" Text="" FontSize="13" Foreground="#7A76A0"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Spacing="6">
+                        <Grid>
+                            <TextBlock x:Name="Win2Title" Text="一周额度" FontSize="18" FontWeight="SemiBold"
+                                       Foreground="#37345A" FontFamily="Segoe UI Variable Display"/>
+                            <TextBlock x:Name="Win2Pct" Text="" FontSize="15" FontWeight="SemiBold" Foreground="#7C6FD8"
+                                       HorizontalAlignment="Right" FontFamily="Segoe UI Variable Display"/>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock x:Name="Win2Remain" Text="—" FontSize="44" FontWeight="SemiBold" Foreground="#37345A"
+                                       FontFamily="Segoe UI Variable Display"/>
+                            <TextBlock Text="剩余" FontSize="14" Foreground="#7A76A0" Margin="0,26,0,0"
+                                       FontFamily="Segoe UI Variable Display"/>
+                        </StackPanel>
+                        <Border Height="12" CornerRadius="6" Background="#E2DEF3">
+                            <Border x:Name="Win2Bar" Height="12" CornerRadius="6" Background="#7C6FD8"
+                                    HorizontalAlignment="Left" Width="0"/>
+                        </Border>
+                        <TextBlock x:Name="Win2Detail" Text="" FontSize="13" Foreground="#7A76A0"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- hourly usage bars -->
+                <StackPanel Grid.Row="1" Spacing="2" VerticalAlignment="Bottom" Margin="0,10,0,0">
+                    <Grid>
+                        <TextBlock Text="逐小时 token 消耗（近 24 小时）" FontSize="13" Foreground="#7A76A0"
+                                   FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock x:Name="ModelsText" Text="" FontSize="12" Foreground="#A5A1C4"
+                                   HorizontalAlignment="Right" FontFamily="Segoe UI Variable Display"/>
+                    </Grid>
+                    <Canvas x:Name="ChartCanvas" Height="88"/>
+                </StackPanel>
+
+                <!-- status while loading / error / unconfigured -->
+                <TextBlock x:Name="StatusText" Grid.RowSpan="2" Visibility="Collapsed" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontSize="20" Foreground="#7A76A0" TextWrapping="Wrap"
+                           FontFamily="Segoe UI Variable Display"/>
+            </Grid>
+        </controls:SoftCard>
+    </Grid>
+</UserControl>

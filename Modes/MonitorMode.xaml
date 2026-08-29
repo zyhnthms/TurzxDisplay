@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="TurzxDisplay.Modes.MonitorMode"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TurzxDisplay.Controls"
+    Width="800" Height="480">
+
+    <Grid Background="#E9EFF7">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- header: title + net rates -->
+        <controls:SoftCard Grid.Row="0" Margin="12,12,12,6" CornerRadius="18" Padding="22,8"
+                           Background="#E9EFF7" BorderBrush="#59FFFFFF">
+            <Grid>
+                <TextBlock Text="系统监控" FontSize="24" FontWeight="SemiBold" Foreground="#2E3D59"
+                           VerticalAlignment="Center" FontFamily="Segoe UI Variable Display"/>
+                <StackPanel Orientation="Horizontal" Spacing="18" VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="↓" FontSize="20" Foreground="#7E96DA" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="NetDownText" Text="0 KB/s" FontSize="19" FontWeight="SemiBold"
+                                   Foreground="#2E3D59" VerticalAlignment="Center" FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock Text="↑" FontSize="20" Foreground="#8FB88A" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="NetUpText" Text="0 KB/s" FontSize="19" FontWeight="SemiBold"
+                                   Foreground="#2E3D59" VerticalAlignment="Center" FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </controls:SoftCard>
+
+        <!-- CPU + GPU cards -->
+        <Grid Grid.Row="1" Margin="12,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- CPU / memory -->
+            <controls:SoftCard Grid.Column="0" CornerRadius="18" Padding="18,12"
+                               Background="#E9EFF7" BorderBrush="#59FFFFFF">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="CPU" FontSize="15" Foreground="#7687A3"
+                                   FontFamily="Segoe UI Variable Display" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="CpuUsageText" Text="0%" FontSize="26" FontWeight="SemiBold"
+                                   Foreground="#2E3D59" HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </Grid>
+                    <TextBlock x:Name="CpuNameText" Grid.Row="1" Text="…" FontSize="13" Foreground="#7687A3"
+                               FontFamily="Segoe UI Variable Display" TextTrimming="CharacterEllipsis" Margin="0,0,0,6"/>
+                    <Border Grid.Row="2" CornerRadius="7" Height="14" Background="#F2F6FC" BorderBrush="#4DFFFFFF" BorderThickness="1">
+                        <Border x:Name="CpuBar" CornerRadius="6" Background="#7E96DA" Width="10" HorizontalAlignment="Left" Margin="2,0"/>
+                    </Border>
+
+                    <Grid Grid.Row="4">
+                        <TextBlock Text="内存" FontSize="15" Foreground="#7687A3"
+                                   FontFamily="Segoe UI Variable Display" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="MemText" Text="0 / 0 GB" FontSize="16" FontWeight="SemiBold"
+                                   Foreground="#2E3D59" HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </Grid>
+                    <Border Grid.Row="5" CornerRadius="7" Height="14" Background="#F2F6FC" BorderBrush="#4DFFFFFF" BorderThickness="1" Margin="0,6,0,0">
+                        <Border x:Name="MemBar" CornerRadius="6" Background="#8AA0D8" Width="10" HorizontalAlignment="Left" Margin="2,0"/>
+                    </Border>
+                    <TextBlock x:Name="MemPct" Grid.Row="6" Text="" FontSize="12" Foreground="#9AA9C2" HorizontalAlignment="Right"
+                               FontFamily="Segoe UI Variable Display" Margin="0,3,0,0"/>
+                </Grid>
+            </controls:SoftCard>
+
+            <!-- GPU -->
+            <controls:SoftCard Grid.Column="2" CornerRadius="18" Padding="18,12"
+                               Background="#E9EFF7" BorderBrush="#59FFFFFF">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="GPU" FontSize="15" Foreground="#7687A3"
+                                       FontFamily="Segoe UI Variable Display" VerticalAlignment="Center"/>
+                            <Border x:Name="GpuVendorBadge" CornerRadius="8" Background="#DFE7F3" Padding="8,1" VerticalAlignment="Center">
+                                <TextBlock x:Name="GpuVendorText" Text="—" FontSize="12" Foreground="#7687A3"
+                                           FontFamily="Segoe UI Variable Display"/>
+                            </Border>
+                        </StackPanel>
+                        <TextBlock x:Name="GpuUsageText" Text="0%" FontSize="26" FontWeight="SemiBold"
+                                   Foreground="#2E3D59" HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,0,0,6">
+                        <TextBlock x:Name="GpuNameText" Text="…" FontSize="13" Foreground="#7687A3"
+                                   FontFamily="Segoe UI Variable Display" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock x:Name="GpuTempText" Text="" FontSize="13" Foreground="#C08A5A" HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </Grid>
+                    <Border Grid.Row="2" CornerRadius="7" Height="14" Background="#F2F6FC" BorderBrush="#4DFFFFFF" BorderThickness="1">
+                        <Border x:Name="GpuBar" CornerRadius="6" Background="#7E96DA" Width="10" HorizontalAlignment="Left" Margin="2,0"/>
+                    </Border>
+
+                    <Grid Grid.Row="4">
+                        <TextBlock Text="显存" FontSize="15" Foreground="#7687A3"
+                                   FontFamily="Segoe UI Variable Display" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="VramText" Text="0 / 0 GB" FontSize="16" FontWeight="SemiBold"
+                                   Foreground="#2E3D59" HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </Grid>
+                    <Border Grid.Row="5" CornerRadius="7" Height="14" Background="#F2F6FC" BorderBrush="#4DFFFFFF" BorderThickness="1" Margin="0,6,0,0">
+                        <Border x:Name="VramBar" CornerRadius="6" Background="#8AA0D8" Width="10" HorizontalAlignment="Left" Margin="2,0"/>
+                    </Border>
+                    <TextBlock x:Name="GpuNote" Grid.Row="6" Text="" FontSize="12" Foreground="#9AA9C2" HorizontalAlignment="Right"
+                               FontFamily="Segoe UI Variable Display" Margin="0,3,0,0"/>
+                </Grid>
+            </controls:SoftCard>
+        </Grid>
+
+        <!-- network bars -->
+        <controls:SoftCard Grid.Row="2" Margin="12,6,12,12" CornerRadius="18" Padding="20,10"
+                           Background="#E9EFF7" BorderBrush="#59FFFFFF">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="4"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBlock Text="下载" FontSize="13" Foreground="#7687A3" FontFamily="Segoe UI Variable Display"/>
+                    <Border Height="10" CornerRadius="5" Background="#F2F6FC" BorderBrush="#4DFFFFFF" BorderThickness="1" Margin="60,2,0,4">
+                        <Border x:Name="NetDownBar" CornerRadius="5" Background="#8AA0D8" Width="6" HorizontalAlignment="Left" Margin="1,0"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <TextBlock Text="上传" FontSize="13" Foreground="#7687A3" FontFamily="Segoe UI Variable Display"/>
+                    <Border Height="10" CornerRadius="5" Background="#F2F6FC" BorderBrush="#4DFFFFFF" BorderThickness="1" Margin="60,2,0,2">
+                        <Border x:Name="NetUpBar" CornerRadius="5" Background="#8FB88A" Width="6" HorizontalAlignment="Left" Margin="1,0"/>
+                    </Border>
+                </Grid>
+            </Grid>
+        </controls:SoftCard>
+    </Grid>
+</UserControl>

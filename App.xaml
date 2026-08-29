@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application
+    x:Class="TurzxDisplay.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TurzxDisplay.Controls">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="SoftBgBrush" Color="#DDE4EE"/>
+            <SolidColorBrush x:Key="CardBgBrush" Color="#E9EFF7"/>
+            <SolidColorBrush x:Key="CardHiBrush" Color="#F4F8FC"/>
+            <SolidColorBrush x:Key="InkBrush" Color="#2E3D59"/>
+            <SolidColorBrush x:Key="InkSoftBrush" Color="#7687A3"/>
+            <SolidColorBrush x:Key="AccentBrush" Color="#7E96DA"/>
+            <SolidColorBrush x:Key="LightEdgeBrush" Color="#59FFFFFF"/>
+
+            <Style x:Key="SoftCard" TargetType="Border">
+                <Setter Property="CornerRadius" Value="18"/>
+                <Setter Property="Background" Value="{StaticResource CardBgBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource LightEdgeBrush}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+
+            <!-- Soft-UI card with layered XAML depth (used by Controls.SoftCard) -->
+            <Style x:Key="SoftCardStyle" TargetType="controls:SoftCard">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:SoftCard">
+                            <Grid>
+                                <Border CornerRadius="{TemplateBinding CornerRadius}"
+                                        Background="#3D8C8479" Margin="2,10,-6,-12"/>
+                                <Border CornerRadius="{TemplateBinding CornerRadius}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1"
+                                        Padding="{TemplateBinding Padding}"
+                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SectionHeader" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Foreground" Value="{StaticResource InkSoftBrush}"/>
+                <Setter Property="FontFamily" Value="Segoe UI Variable Display"/>
+            </Style>
+
+            <!-- Soft segmented pill for mode switching -->
+            <Style x:Key="ModeSegment" TargetType="RadioButton">
+                <Setter Property="FontFamily" Value="Segoe UI Variable Display"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Foreground" Value="{StaticResource InkSoftBrush}"/>
+                <Setter Property="Padding" Value="13,9"/>
+                <Setter Property="MinWidth" Value="48"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="RadioButton">
+                            <Border x:Name="Root" CornerRadius="14" Background="Transparent"
+                                    BorderBrush="Transparent" BorderThickness="1"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter Content="{TemplateBinding Content}"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.Background" Value="#F2F6FB"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.Background" Value="#E4EBF4"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Checked">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.Background" Value="{StaticResource CardHiBrush}"/>
+                                            <Setter Target="Root.BorderBrush" Value="{StaticResource LightEdgeBrush}"/>
+                                            <Setter Target="Root.BorderThickness" Value="1"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="CheckedPointerOver">
+                                        <VisualState.Setters>
+                                            <Setter Target="Root.Background" Value="#FFFFFF"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

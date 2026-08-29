@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="TurzxDisplay.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TurzxDisplay.Controls"
+    Title="TurzxDisplay — 5寸 USB 显示屏">
+
+    <Grid x:Name="RootGrid" Background="{StaticResource SoftBgBrush}" RequestedTheme="Light">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ============ Header ============ -->
+        <Grid Grid.Row="0" Margin="22,18,22,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                <controls:SoftCard Width="38" Height="38" CornerRadius="12"
+                        Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <TextBlock Text="&#xE7F4;" FontFamily="Segoe Fluent Icons" FontSize="17"
+                               Foreground="{StaticResource AccentBrush}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </controls:SoftCard>
+                <TextBlock Text="TurzxDisplay" FontSize="20" FontWeight="SemiBold"
+                           Foreground="{StaticResource InkBrush}" VerticalAlignment="Center"
+                           FontFamily="Segoe UI Variable Display"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+                <Ellipse x:Name="StatusDot" Width="10" Height="10" Fill="#C3CCDA"/>
+                <TextBlock x:Name="StatusText" Text="未连接" FontSize="13"
+                           Foreground="{StaticResource InkSoftBrush}" VerticalAlignment="Center"
+                           FontFamily="Segoe UI Variable Display"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ============ Body ============ -->
+        <Grid Grid.Row="1" Margin="22,8,22,18">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="330"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Preview card -->
+            <controls:SoftCard Grid.Row="0" Grid.Column="0" Margin="0,0,14,14"
+                    CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                <Viewbox Stretch="Uniform" Margin="14">
+                    <Grid x:Name="ModeHost" Width="800" Height="480"/>
+                </Viewbox>
+            </controls:SoftCard>
+
+            <!-- Connection bar -->
+            <controls:SoftCard Grid.Row="1" Grid.Column="0" Margin="0,0,14,0" Padding="16,12"
+                    CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- mode segments -->
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                        <RadioButton x:Name="SegClock" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegClock" ToolTipService.ToolTip="时钟 + 日历">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="&#xE823;" FontFamily="Segoe Fluent Icons" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBlock Text="时钟" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="SegNotes" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegNotes" ToolTipService.ToolTip="便签">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="&#xE70B;" FontFamily="Segoe Fluent Icons" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBlock Text="便签" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="SegAlbum" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegAlbum" ToolTipService.ToolTip="照片轮播">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="&#xE8B9;" FontFamily="Segoe Fluent Icons" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBlock Text="相册" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="SegWeather" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegWeather" ToolTipService.ToolTip="天气预报">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="⛅" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBlock Text="天气" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="SegMonitor" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegMonitor" ToolTipService.ToolTip="硬件监控">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="📈" FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="监控" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="SegQuota" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegQuota" ToolTipService.ToolTip="GLM Coding Plan 额度">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="🪙" FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="额度" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                        <RadioButton x:Name="SegMusic" Style="{StaticResource ModeSegment}" GroupName="Mode"
+                                     Checked="OnSegMusic" ToolTipService.ToolTip="正在播放 + 歌词">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Text="🎵" FontSize="14" VerticalAlignment="Center"/>
+                                <TextBlock Text="音乐" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </RadioButton>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <ComboBox x:Name="PortCombo" Width="110" PlaceholderText="串口"
+                                  FontFamily="Segoe UI Variable Display"/>
+                        <Button x:Name="RefreshPortsBtn" Click="OnRefreshPorts" ToolTipService.ToolTip="刷新串口列表"
+                                Background="Transparent" BorderBrush="Transparent"
+                                Foreground="{StaticResource InkSoftBrush}">
+                            <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" FontSize="14"
+                                       Foreground="{StaticResource InkSoftBrush}"/>
+                        </Button>
+                        <Button x:Name="ConnectBtn" Click="OnConnect" Content="连接"
+                                FontFamily="Segoe UI Variable Display"
+                                Foreground="{StaticResource InkBrush}"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                        <Button x:Name="PushBtn" Click="OnPushNow" ToolTipService.ToolTip="立即推送画面"
+                                Background="Transparent" BorderBrush="Transparent"
+                                Foreground="{StaticResource InkSoftBrush}">
+                            <TextBlock Text="&#xE7E8;" FontFamily="Segoe Fluent Icons" FontSize="15"
+                                       Foreground="{StaticResource InkSoftBrush}"/>
+                        </Button>
+                        <ToggleSwitch x:Name="AutoPushSwitch" Header="自动推送" OffContent="" OnContent=""
+                                      Foreground="{StaticResource InkBrush}"
+                                      Toggled="OnAutoPushToggled" MinWidth="80"/>
+                    </StackPanel>
+                </Grid>
+            </controls:SoftCard>
+
+            <!-- ============ Right panel ============ -->
+            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Display settings -->
+                <controls:SoftCard Grid.Row="0" Margin="0,0,0,14" Padding="18,14"
+                        CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="显示设置" Style="{StaticResource SectionHeader}"/>
+                        <TextBlock Text="亮度" FontSize="14" Foreground="{StaticResource InkBrush}"
+                                   FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock Text="(0–100)" FontSize="11" Foreground="{StaticResource InkSoftBrush}"
+                                   FontFamily="Segoe UI Variable Display" Margin="0,-8,0,0"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Slider x:Name="BrightSlider" Minimum="0" Maximum="100" Value="80"
+                                    ValueChanged="OnBrightChanged"/>
+                            <TextBlock x:Name="BrightValue" Grid.Column="1" Text="80" FontSize="13"
+                                       Foreground="{StaticResource InkSoftBrush}" VerticalAlignment="Center"
+                                       HorizontalAlignment="Right" FontFamily="Segoe UI Variable Display"/>
+                        </Grid>
+                        <ToggleSwitch x:Name="RotateSwitch" Header="旋转 180&#176;" OffContent="" OnContent=""
+                                      Foreground="{StaticResource InkBrush}"
+                                      Toggled="OnRotateToggled" MinWidth="0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </controls:SoftCard>
+
+                <!-- Notes editor (sticky mode) -->
+                <!-- Album settings (photo slideshow) -->
+                <controls:SoftCard x:Name="AlbumPanel" Grid.Row="1" Margin="0,0,0,14" Padding="18,14"
+                        Visibility="Collapsed"
+                        CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="相册" Style="{StaticResource SectionHeader}"/>
+                        <Button x:Name="PickFolderBtn" Click="OnPickFolder" Content="选择照片文件夹…"
+                                Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock x:Name="AlbumFolderText" Text="（未选择）" FontSize="12" TextTrimming="CharacterEllipsis"
+                                   Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock x:Name="AlbumCount" Text="" FontSize="12"
+                                   Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <ComboBox x:Name="IntervalCombo" Header="切换间隔" MinWidth="130"
+                                  SelectionChanged="OnIntervalChanged" FontFamily="Segoe UI Variable Display"
+                                  Foreground="{StaticResource InkBrush}">
+                            <ComboBoxItem Content="5 秒" Tag="5"/>
+                            <ComboBoxItem Content="10 秒" Tag="10"/>
+                            <ComboBoxItem Content="30 秒" Tag="30"/>
+                            <ComboBoxItem Content="60 秒" Tag="60"/>
+                        </ComboBox>
+                        <ToggleSwitch x:Name="ShuffleSwitch" Header="随机顺序" OffContent="" OnContent=""
+                                      Foreground="{StaticResource InkBrush}" Toggled="OnShuffleToggled" MinWidth="0" HorizontalAlignment="Left"/>
+                        <ToggleSwitch x:Name="FillSwitch" Header="填满画面（裁剪）/ 完整显示" OffContent="" OnContent=""
+                                      Foreground="{StaticResource InkBrush}" Toggled="OnFillToggled" MinWidth="0" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </controls:SoftCard>
+
+                <!-- Weather settings -->
+                <controls:SoftCard x:Name="WeatherPanel" Grid.Row="1" Margin="0,0,0,14" Padding="18,14"
+                        Visibility="Collapsed"
+                        CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="天气" Style="{StaticResource SectionHeader}"/>
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <RadioButton x:Name="SrcOmeteo" Style="{StaticResource ModeSegment}" GroupName="WSrc"
+                                         Checked="OnSrcOmeteo" Content="Open-Meteo" ToolTipService.ToolTip="免费无密钥"/>
+                            <RadioButton x:Name="SrcQw" Style="{StaticResource ModeSegment}" GroupName="WSrc"
+                                         Checked="OnSrcQw" Content="和风天气" ToolTipService.ToolTip="区县级位置 · 空气质量 · 天文 · 预警"/>
+                        </StackPanel>
+                        <Button x:Name="RefreshWeatherBtn" Click="OnRefreshWeather" Content="立即刷新" HorizontalAlignment="Left"
+                                Background="Transparent" BorderBrush="Transparent"
+                                Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+
+                        <!-- Open-Meteo location -->
+                        <StackPanel x:Name="OmPanel" Spacing="10">
+                            <Button x:Name="AutoLocateBtn" Click="OnAutoLocate" Content="自动定位" HorizontalAlignment="Left"
+                                    Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            <TextBlock x:Name="WeatherCityText" Text="（未设置位置）" FontSize="13"
+                                       Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBox x:Name="LatBox" Header="纬度" Width="110" FontSize="13"
+                                         Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                                <TextBox x:Name="LonBox" Header="经度" Width="110" FontSize="13"
+                                         Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                                <Button x:Name="SaveLocBtn" Click="OnSaveLocation" Content="保存" Margin="0,24,0,0"
+                                        Background="Transparent" BorderBrush="Transparent"
+                                        Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!-- QWeather credentials + district-level location search -->
+                        <StackPanel x:Name="QwPanel" Spacing="8" Visibility="Collapsed">
+                            <TextBlock x:Name="QwKeyStatus" Text="…" FontSize="11" TextWrapping="Wrap"
+                                       Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                            <TextBox x:Name="QwHostBox" Header="API Host（控制台·设置）" FontSize="13"
+                                     PlaceholderText="例如 abc123.qweatherapi.com"
+                                     Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="QwDevBox" Header="开发者ID" FontSize="12"
+                                         Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                                <TextBox x:Name="QwSubBox" Grid.Column="1" Header="项目ID" FontSize="12"
+                                         Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                                <TextBox x:Name="QwKidBox" Grid.Column="2" Header="凭据ID" FontSize="12"
+                                         Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            </Grid>
+                            <Button x:Name="SaveQwBtn" Click="OnSaveQw" Content="保存配置" HorizontalAlignment="Left"
+                                    Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            <Button x:Name="AutoLocateQwBtn" Click="OnAutoLocateQw" Content="自动定位（就近区县）" HorizontalAlignment="Left"
+                                    Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBox x:Name="QwSearchBox" Header="搜索城市 / 区县" Width="170" FontSize="13"
+                                         KeyDown="OnQwSearchKey"
+                                         Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                                <Button x:Name="QwSearchBtn" Click="OnSearchQwCity" Content="搜索" Margin="0,24,0,0"
+                                        Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                            </StackPanel>
+                            <ScrollViewer MaxHeight="200" VerticalScrollBarVisibility="Auto">
+                                <StackPanel x:Name="QwResults" Spacing="3"/>
+                            </ScrollViewer>
+                            <TextBlock x:Name="QwCityText" Text="（未选择位置）" FontSize="13" TextWrapping="Wrap"
+                                       Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <RadioButton x:Name="View24h" Style="{StaticResource ModeSegment}" GroupName="WView"
+                                         Checked="OnView24h" Content="24 小时"/>
+                            <RadioButton x:Name="View7d" Style="{StaticResource ModeSegment}" GroupName="WView"
+                                         Checked="OnView7d" Content="未来 7 天"/>
+                        </StackPanel>
+                        <TextBlock Text="Open-Meteo 免费无密钥；和风天气提供区县级位置、空气质量、天文与预警数据。每 30 分钟自动更新。"
+                                   FontSize="11" Foreground="{StaticResource InkSoftBrush}" TextWrapping="Wrap"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+                </controls:SoftCard>
+
+                <!-- GLM Coding Plan quota settings -->
+                <controls:SoftCard x:Name="QuotaPanel" Grid.Row="1" Margin="0,0,0,14" Padding="18,14"
+                        Visibility="Collapsed"
+                        CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="GLM 额度" Style="{StaticResource SectionHeader}"/>
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <Button x:Name="RefreshQuotaBtn" Click="OnRefreshQuota" Content="立即刷新"
+                                    Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                        </StackPanel>
+                        <TextBlock x:Name="QuotaStatusText" Text="…" FontSize="12" TextWrapping="Wrap"
+                                   Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <PasswordBox x:Name="GlmTokenBox" Header="Token（可选）" FontSize="13" MinWidth="130"
+                                     PlaceholderText="留空则自动读取 Claude Code 配置"
+                                     Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <Button x:Name="SaveGlmTokenBtn" Click="OnSaveGlmToken" Content="保存 Token"
+                                Background="Transparent" BorderBrush="Transparent"
+                                Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock Text="自动读取 %USERPROFILE%\.claude\settings.json 中的 ANTHROPIC_AUTH_TOKEN；额度每 5 分钟自动更新。"
+                                   FontSize="11" Foreground="{StaticResource InkSoftBrush}" TextWrapping="Wrap"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+                </controls:SoftCard>
+
+                <!-- Music (now-playing) settings -->
+                <controls:SoftCard x:Name="MusicPanel" Grid.Row="1" Margin="0,0,0,14" Padding="18,14"
+                        Visibility="Collapsed"
+                        CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="音乐" Style="{StaticResource SectionHeader}"/>
+                        <Button x:Name="PickLyricsBtn" Click="OnPickLyricsFolder" Content="选择歌词文件夹…"
+                                Foreground="{StaticResource InkBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock x:Name="LyricsFolderText" Text="（未选择）" FontSize="12" TextTrimming="CharacterEllipsis"
+                                   Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock Text="匹配规则：优先「歌手 - 标题.lrc」，其次「标题.lrc」或包含标题的文件。"
+                                   FontSize="11" Foreground="{StaticResource InkSoftBrush}" TextWrapping="Wrap"
+                                   FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock x:Name="MusicSourceText" Text="…" FontSize="12"
+                                   Foreground="{StaticResource InkSoftBrush}" FontFamily="Segoe UI Variable Display"/>
+                        <TextBlock Text="支持通过系统媒体控制(SMTC)上报的播放器：PotPlayer（选项中开启 SMTC）、foobar2000、Media Player、Spotify、浏览器等。"
+                                   FontSize="11" Foreground="{StaticResource InkSoftBrush}" TextWrapping="Wrap"
+                                   FontFamily="Segoe UI Variable Display"/>
+                    </StackPanel>
+                </controls:SoftCard>
+
+                <controls:SoftCard x:Name="NotesPanel" Grid.Row="1" Margin="0,0,0,14" Padding="18,14"
+                        Visibility="Collapsed"
+                        CornerRadius="18" Background="{StaticResource CardBgBrush}" BorderBrush="{StaticResource LightEdgeBrush}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <TextBlock Text="便签" Style="{StaticResource SectionHeader}" VerticalAlignment="Center"/>
+                            <Button x:Name="AddNoteBtn" Click="OnAddNote" HorizontalAlignment="Right"
+                                    Background="Transparent" BorderBrush="Transparent" ToolTipService.ToolTip="添加便签"
+                                    Foreground="{StaticResource InkSoftBrush}">
+                                <TextBlock Text="&#xE710;" FontFamily="Segoe Fluent Icons" FontSize="15"
+                                           Foreground="{StaticResource InkSoftBrush}"/>
+                            </Button>
+                        </Grid>
+                        <ScrollViewer Grid.Row="1" MaxHeight="320" VerticalScrollBarVisibility="Auto" Margin="0,8,0,0">
+                            <ItemsControl x:Name="NotesList">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Spacing="6" Margin="0,0,0,12">
+                                            <Grid>
+                                                <TextBox x:Name="NoteBox" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=Default}"
+                                                         TextChanged="OnNoteTextChanged" AcceptsReturn="True" TextWrapping="Wrap"
+                                                         MaxHeight="84" FontSize="13"
+                                                         FontFamily="Segoe UI Variable Display" PlaceholderText="便签内容…"/>
+                                                <Button x:Name="DelNoteBtn" Click="OnDeleteNote" Content="&#xE74D;"
+                                                        FontFamily="Segoe Fluent Icons" FontSize="11"
+                                                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                                                        Background="Transparent" BorderBrush="Transparent"
+                                                        Foreground="{StaticResource InkSoftBrush}"
+                                                        Margin="0,4,4,0" Opacity="0.7"/>
+                                            </Grid>
+                                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                                <Border Tag="#FDF3BE" Tapped="OnPickColor" Width="20" Height="20" CornerRadius="7" Background="#FDF3BE"/>
+                                                <Border Tag="#FBDDE3" Tapped="OnPickColor" Width="20" Height="20" CornerRadius="7" Background="#FBDDE3"/>
+                                                <Border Tag="#D6F2DE" Tapped="OnPickColor" Width="20" Height="20" CornerRadius="7" Background="#D6F2DE"/>
+                                                <Border Tag="#D8E9FB" Tapped="OnPickColor" Width="20" Height="20" CornerRadius="7" Background="#D8E9FB"/>
+                                                <Border Tag="#EFE3FA" Tapped="OnPickColor" Width="20" Height="20" CornerRadius="7" Background="#EFE3FA"/>
+                                                <Border Tag="#FBE5CC" Tapped="OnPickColor" Width="20" Height="20" CornerRadius="7" Background="#FBE5CC"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <TextBlock x:Name="NotesHint" Grid.Row="2" Text="显示屏最多同时显示 6 张便签。"
+                                   FontSize="12" Foreground="{StaticResource InkSoftBrush}"
+                                   FontFamily="Segoe UI Variable Display" Margin="0,6,0,0"/>
+                    </Grid>
+                </controls:SoftCard>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
