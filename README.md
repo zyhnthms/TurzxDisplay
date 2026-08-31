@@ -70,6 +70,44 @@
 生成 `Data/china-cities.tsv`（许可原因仓库不带此文件，见
 [Data/README](Data/README.md)）。
 
+## 从源代码构建
+
+### 准备
+
+1. **.NET SDK 8.0**（`winget install Microsoft.DotNet.SDK.8`，或从
+   [dotnet.microsoft.com](https://dotnet.microsoft.com/download/dotnet/8.0) 下载；
+   用 `dotnet --list-sdks` 确认）
+2. **可选** Node.js 20.11+ —— 仅当需要（重新）生成中国城市表 `Data/china-cities.tsv`：
+   ```bash
+   node tools/update-city-list.mjs
+   ```
+   不生成也能构建运行，只是和风天气的城市搜索不可用。
+3. **可选** 和风天气私钥 `qweather/ed25519-private.pem`（见
+   [qweather/README](qweather/README.md)）；缺失不影响其他功能。
+
+### 构建与运行
+
+```bash
+git clone git@github.com:zyhnthms/TurzxDisplay.git
+cd TurzxDisplay
+dotnet run -c Debug          # 直接编译并运行（首次还原 NuGet 包需联网）
+```
+
+### 发布（自包含目录，免安装）
+
+发布产物不依赖目标机器安装任何运行时，拷走整个目录即可运行：
+
+```bash
+dotnet publish -c Release -r win-x64 --self-contained true
+```
+
+产物位于 `bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/`。
+对外分发前请把其中的 `qweather/*.pem`（你的私钥）和 `Data/china-cities.tsv`
+（数据源许可）移出，再压缩整个目录。
+
+> 说明：WinUI 3 / Windows App SDK 1.x 的发布形态是「自包含多文件目录」，
+> 官方在该版本线不支持单文件（`PublishSingleFile`）打包——本项目按此方式发布。
+
 ## 第三方依赖与许可
 
 ### NuGet 软件包（均为 MIT License）
